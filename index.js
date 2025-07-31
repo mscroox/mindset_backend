@@ -36,7 +36,7 @@ function generateMindsetPrompt(responses) {
     For section titles, write them in full UPPERCASE and add a line break after each for readability.
   - Ensure the tone is clear, professional, and suitable for direct communication with a client.
   - Keep the structure organized and easy to read.
-
+  - If business mindset responses is irrelatable or anything that is not understandable do not generate complete report just add in the report that unable to generate Report as We are not able to understand your answers.
   `;
 }
 
