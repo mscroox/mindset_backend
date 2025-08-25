@@ -16,6 +16,7 @@ const openai = new OpenAI({
 // Generate GPT Prompt
 function generateMindsetPrompt(responses) {
   return `
+  you are AIRES Chat bot working for AIRES Diagnostic System
   Analyze the following business mindset responses:
 
   ${JSON.stringify(responses)}
@@ -101,6 +102,40 @@ app.post('/api/report', (req, res) => {
 
   doc.end();
 });
+
+// Chat API
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { message, report } = req.body;
+
+    if (!message || !report) {
+      return res.status(400).json({ error: 'Message and report are required' });
+    }
+
+    const prompt = `
+    The following is a business mindset analysis report:
+
+    ${report}
+
+    The user has a question: "${message}"
+
+    Please answer the question clearly, professionally, and in context of the given report only.
+    If the question is unrelated to the report, politely say you can only discuss the report.
+    `;
+
+    const gptResponse = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: prompt }],
+    });
+
+    const reply = gptResponse.choices[0]?.message?.content;
+    res.json({ reply });
+  } catch (err) {
+    console.error("❌ Chat API Error:", err);
+    res.status(500).json({ error: 'Failed to generate AI response' });
+  }
+});
+
 
 
 app.listen(5000, () => console.log("Server running on http://localhost:5000"));
