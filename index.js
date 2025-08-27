@@ -23,7 +23,7 @@ function generateMindsetPrompt(responses) {
 
   Your task is to generate a well-structured Business Mindset Analysis Report that includes:
 
-  1. A total mindset score out of 100 based on the responses.
+  1. A total mindset score out of 100 based on the responses score (calculate an average of all prompts in backend).
   2. A suitable business type that aligns with the individual’s mindset.
   3. A tailored coaching plan, including a clear title and a detailed description.
 
